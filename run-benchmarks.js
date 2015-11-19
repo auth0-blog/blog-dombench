@@ -7,11 +7,22 @@ var dirs = {
 
 var browserPerf = require('browser-perf');
 var spawn = require('child_process').spawn;
+var json2csv = require('json2csv');
 
 var FILE = 'data.json';
 var fs = require('fs');
 if (!fs.existsSync(FILE)) {
 	fs.writeFileSync(FILE, JSON.stringify({}));
+}
+
+function startChromeDriver() {
+    console.log('Starting ChromeDriver...');
+    return spawn('chromedriver');
+}
+
+function stopChromeDriver(childProcess) {
+    console.log('Stopping ChromeDriver.');
+    childProcess.kill('SIGTERM');
 }
 
 function startServer(dir) {
@@ -30,10 +41,51 @@ function stopServer(childProcess) {
     childProcess.kill('SIGTERM');
 }
 
+function averageValues() {
+    var fields = ['MajorGC', 'MinorGC', 'Layout', 'Paint', 'mean_frame_time', 
+        'droppedFrameCount', 'ExpensivePaints', 'ExpensiveEventHandlers', 
+        'NodePerLayout_avg', 'frames_per_sec', 'percentage_smooth', 
+        'domReadyTime'];
+
+    var data = JSON.parse(fs.readFileSync(FILE));
+    
+    var result = [];
+    
+    fields.forEach(function(field) {
+        var row = { field: field };
+        Object.keys(data).forEach(function(framework) {
+            var values = data[framework][field];
+            if(!values) {
+                row[framework] = "Missing";
+            } else {
+                var avg = values.reduce(function(a, v){ return a + v; }, 0) / 
+                          values.length;
+                row[framework] = avg;
+            }
+        });
+        result.push(row);
+    });
+    
+    var columnNames = [ 'field' ].concat(Object.keys(data));
+    
+    json2csv({ data: result, fields: columnNames }, function(err, csv) {
+        if(err) {
+            console.log(err);
+            return;
+        }
+        fs.writeFileSync('results.csv', csv);
+        console.log('file saved');
+    });
+}
+
+startChromeDriver();
+
 var frameworks = Object.keys(dirs);
 (function runTest(i) {
 	if (i >= frameworks.length) {
 		console.log('All tests done');
+		stopChromeDriver()
+		averageValues();
 		return;
 	}
 		    
@@ -54,7 +106,7 @@ var frameworks = Object.keys(dirs);
 }(0));
 
 function repeatTest(framework, cb) {
-	var REPEAT = 1;
+	var REPEAT = 5;
 	console.log('Running test for %s', framework);
 	(function iterate(i) {
 		if (i >= REPEAT) {
@@ -80,7 +132,7 @@ function repeatTest(framework, cb) {
 						data[framework][metric].push(res[metric]);
 					}
 				});
-				fs.writeFileSync(FILE, JSON.stringify(data));
+				fs.writeFileSync(FILE, JSON.stringify(data, null, '\t'));
 			}
 			iterate(i + 1);
 		}, {
