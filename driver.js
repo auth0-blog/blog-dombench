@@ -36,9 +36,6 @@ var frameworks = Object.keys(dirs);
 		console.log('All tests done');
 		return;
 	}
-
-    console.log("Starting Python HTTP server at " + 
-		    process.cwd() + '/' + dirs[frameworks[i]]);
 		    
 	var child = startServer(dirs[frameworks[i]]);
 	setTimeout(function() {
