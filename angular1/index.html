@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="dbmonApp">
+<head>
+<meta name="description" content="DBMON ANGULAR 1.X" />
+  <meta charset="utf-8">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+        integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
+        crossorigin="anonymous">
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <title>dbmon (angular.js 1.x)</title>
+
+  <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular.min.js" type="text/javascript"></script>
+  <script src="app.js" type="text/javascript"></script>
+</head>
+<body ng-controller="MainController">
+  <div id="dbmon">
+      <div>
+          <table class="table table-striped latest-data">
+              <tbody>
+                  <tr ng-repeat="(db, database) in databases">
+                      <td class="dbname">
+                          {{db}}
+                      </td>
+                      <td class="query-count">
+                          <span ng-class="database.countClassName">
+                              {{database.lastSample.queries.length}}
+                          </span>
+                      </td>
+                      <td ng-repeat="query in database.topFiveQueries"
+                          ng-class="getClassName(query)">
+                          {{formatElapsed(query.elapsed)}}
+                          <div class="popover left">
+                              <div class="popover-content">
+                                  {{query.query}}
+                              </div>
+                              <div class="arrow"></div>
+                          </div>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
+</body>
+</html>
