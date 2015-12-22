@@ -21,7 +21,7 @@ function getData() {
   for (var i = 1; i <= ENV.rows; i++) {
     data.databases["cluster" + i] = {
       queries: []
-    };  
+    };
 
     data.databases["cluster" + i + "slave"] = {
       queries: []
@@ -90,7 +90,7 @@ function renderQuery(query) {
         className = "elapsed warn";
     }
 
-    elementOpen('td', null, null, 'class', className);
+    elementOpen('td', null, null, 'class', "Query " + className);
         text(query.elapsed ? formatElapsed(query.elapsed) : '');
         elementOpen('div', null, ['class', 'popover left']);
             elementOpen('div', null, ['class', 'popover-content']);
@@ -131,20 +131,20 @@ function renderDatabase(db, samples, idx) {
     elementOpen('tr');
         elementOpen('td', idx, ['class', 'dbname']);
             text(db);
-        elementClose('td');        
+        elementClose('td');
         renderSample(lastSample.queries, lastSample.time);
-    elementClose('tr');        
+    elementClose('tr');
 }
 
 function renderDBMon(databases) {
     elementOpen('div');
         elementOpen('table', null, ['class', 'table table-striped latest-data']);
             elementOpen('tbody');
-                
+
                 Object.keys(databases).forEach(function(db, idx) {
                     renderDatabase(db, databases[db].samples, idx);
                 });
-                
+
             elementClose('tbody');
         elementClose('table');
     elementClose('div');
@@ -180,11 +180,9 @@ function loadSamples() {
     });
 
     patch(document.getElementById('dbmon'), renderDBMon, globals.databases);
-    
+
     setTimeout(this.loadSamples, ENV.timeout);
 }
 
 // Start doing stuff
 loadSamples();
-
-
