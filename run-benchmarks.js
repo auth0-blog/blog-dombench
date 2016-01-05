@@ -2,7 +2,12 @@ var dirs = {
 	react: 'react',
 	ember: 'ember/dist',
 	ember2: 'ember2/dist',
-	incrementaldom: 'incrementaldom'
+	incrementaldom: 'incrementaldom',
+	angular1: 'angular1',
+	angular2: 'angular2',
+	mithril: 'mithril',
+	virtualdom: 'virtualdom',
+	citojs: 'citojs'
 }
 
 var browserPerf = require('browser-perf');
@@ -27,7 +32,7 @@ function stopChromeDriver(childProcess) {
 
 function startServer(dir) {
     var fulldir = process.cwd() + '/' + dir;
-    
+
     console.log("Starting Python HTTP server at " + fulldir);
 
     return spawn('python2', ['-m', 'SimpleHTTPServer'], {
@@ -42,15 +47,16 @@ function stopServer(childProcess) {
 }
 
 function averageValues() {
-    var fields = ['MajorGC', 'MinorGC', 'Layout', 'Paint', 'mean_frame_time', 
-        'droppedFrameCount', 'ExpensivePaints', 'ExpensiveEventHandlers', 
-        'NodePerLayout_avg', 'frames_per_sec', 'percentage_smooth', 
-        'domReadyTime'];
+    var fields = ['MajorGC', 'MinorGC', 'Layout', 'Paint', 'mean_frame_time',
+        'droppedFrameCount', 'ExpensivePaints', 'ExpensiveEventHandlers',
+        'NodePerLayout_avg', 'frames_per_sec', 'percentage_smooth',
+        'domReadyTime', 'totalJSHeapSize_max', 'totalJSHeapSize_avg',
+		'usedJSHeapSize_max', 'usedJSHeapSize_avg'];
 
     var data = JSON.parse(fs.readFileSync(FILE));
-    
+
     var result = [];
-    
+
     fields.forEach(function(field) {
         var row = { field: field };
         Object.keys(data).forEach(function(framework) {
@@ -58,16 +64,16 @@ function averageValues() {
             if(!values) {
                 row[framework] = "Missing";
             } else {
-                var avg = values.reduce(function(a, v){ return a + v; }, 0) / 
+                var avg = values.reduce(function(a, v){ return a + v; }, 0) /
                           values.length;
                 row[framework] = avg;
             }
         });
         result.push(row);
     });
-    
+
     var columnNames = [ 'field' ].concat(Object.keys(data));
-    
+
     json2csv({ data: result, fields: columnNames }, function(err, csv) {
         if(err) {
             console.log(err);
@@ -88,7 +94,7 @@ var frameworks = Object.keys(dirs);
 		averageValues();
 		return;
 	}
-		    
+
 	var child = startServer(dirs[frameworks[i]]);
 	setTimeout(function() {
         console.log('Starting benchmark...');
@@ -97,7 +103,7 @@ var frameworks = Object.keys(dirs);
             runTest(i + 1);
         });
     }, 1000);
-	
+
 	child.on('error', function(err) {
 	    console.log("Fatal error: ");
 	    console.log(err);
@@ -113,7 +119,7 @@ function repeatTest(framework, cb) {
 			console.log('All tests done for %s', framework);
 			cb();
 			return;
-		}				
+		}
 
 		console.log('[%d|%d]', i, REPEAT);
 		browserPerf('http://localhost:8000', function(err, result) {
