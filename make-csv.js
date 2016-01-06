@@ -8,7 +8,7 @@ function averageValues() {
         'droppedFrameCount', 'ExpensivePaints', 'ExpensiveEventHandlers',
         'NodePerLayout_avg', 'frames_per_sec', 'percentage_smooth',
         'domReadyTime', 'totalJSHeapSize_max', 'totalJSHeapSize_avg',
-		'usedJSHeapSize_max', 'usedJSHeapSize_avg'];
+		'usedJSHeapSize_max', 'usedJSHeapSize_avg', 'Javascript'];
 
     var data = JSON.parse(fs.readFileSync(FILE));
 

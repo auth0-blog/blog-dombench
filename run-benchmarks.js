@@ -51,7 +51,7 @@ function averageValues() {
         'droppedFrameCount', 'ExpensivePaints', 'ExpensiveEventHandlers',
         'NodePerLayout_avg', 'frames_per_sec', 'percentage_smooth',
         'domReadyTime', 'totalJSHeapSize_max', 'totalJSHeapSize_avg',
-		'usedJSHeapSize_max', 'usedJSHeapSize_avg'];
+		'usedJSHeapSize_max', 'usedJSHeapSize_avg', 'Javascript'];
 
     var data = JSON.parse(fs.readFileSync(FILE));
 
@@ -84,13 +84,13 @@ function averageValues() {
     });
 }
 
-startChromeDriver();
+var chromeDriver = startChromeDriver();
 
 var frameworks = Object.keys(dirs);
 (function runTest(i) {
 	if (i >= frameworks.length) {
 		console.log('All tests done');
-		stopChromeDriver()
+		stopChromeDriver(chromeDriver);
 		averageValues();
 		return;
 	}
