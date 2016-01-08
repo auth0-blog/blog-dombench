@@ -129,7 +129,7 @@ function renderDatabase(db, samples, idx) {
     var lastSample = samples[samples.length - 1];
 
     elementOpen('tr');
-        elementOpen('td', idx, ['class', 'dbname']);
+        elementOpen('td', null, ['class', 'dbname']);
             text(db);
         elementClose('td');
         renderSample(lastSample.queries, lastSample.time);
