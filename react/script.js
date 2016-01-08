@@ -16,7 +16,7 @@ function getData() {
   for (var i = 1; i <= ENV.rows; i++) {
     data.databases["cluster" + i] = {
       queries: []
-    };  
+    };
 
     data.databases["cluster" + i + "slave"] = {
       queries: []
@@ -108,9 +108,7 @@ var sample = function (queries, time) {
   var _queries = [];
   topFiveQueries.forEach(function(query, index) {
     _queries.push(
-      <Query
-        key={index}
-        query={query.query}
+      <Query query={query.query}
         elapsed={query.elapsed}
       />
     );
@@ -142,7 +140,7 @@ var Database = React.createClass({
     var lastSample = this.props.samples[this.props.samples.length - 1];
 
     return (
-      <tr key={this.props.dbname}>
+      <tr>
         <td className="dbname">
           {this.props.dbname}
         </td>
@@ -195,8 +193,7 @@ var DBMon = React.createClass({
     var databases = [];
     Object.keys(this.state.databases).forEach(function(dbname) {
       databases.push(
-        <Database key={dbname}
-          dbname={dbname}
+        <Database dbname={dbname}
           samples={this.state.databases[dbname].samples} />
       );
     }.bind(this));
@@ -216,5 +213,3 @@ var DBMon = React.createClass({
 React.render(<DBMon />, document.getElementById('dbmon'), function() {
   console.log(Date.now() - start);
 });
-
-
