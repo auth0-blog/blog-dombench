@@ -1,13 +1,21 @@
 var dirs = {
 	react: 'react',
+	react_keys: 'react_keys',
 	ember: 'ember/dist',
+	ember_keys: 'ember_keys/dist',
 	ember2: 'ember2/dist',
+	ember2_keys: 'ember2_keys/dist',
 	incrementaldom: 'incrementaldom',
+	incrementaldom_keys: 'incrementaldom_keys',
 	angular1: 'angular1',
+	angular1_trackby: 'angular1_trackby',
 	angular2: 'angular2',
 	mithril: 'mithril',
+	mithril: 'mithril_keys',
 	virtualdom: 'virtualdom',
-	citojs: 'citojs'
+	virtualdom: 'virtualdom_keys',
+	citojs: 'citojs',
+	citojs: 'citojs_keys'
 }
 
 var browserPerf = require('browser-perf');

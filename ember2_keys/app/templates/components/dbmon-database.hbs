@@ -6,7 +6,7 @@
     {{queries.length}}
   </span>
 </td>
-{{#each topFiveQueries as |query|}}
+{{#each topFiveQueries key="key" as |query|}}
   <td class="Query {{query.className}}">
     {{query.elapsed}}
     <div class="popover left">

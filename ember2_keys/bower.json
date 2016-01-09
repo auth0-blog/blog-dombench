@@ -1,0 +1,14 @@
+{
+  "name": "dbmonster",
+  "dependencies": {
+    "ember": "^2.2.0",
+    "ember-data": "^2.2.0",
+    "ember-resolver": "~0.1.15",
+    "jquery": "^1.11.1",
+    "loader.js": "ember-cli/loader.js#3.2.0",
+    "qunit": "~1.17.1",
+    "ember-cli-shims": "~0.0.6",
+    "ember-cli-test-loader": "~0.2.1",
+    "ember-load-initializers": "~0.1.7"
+  }
+}

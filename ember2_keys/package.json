@@ -1,0 +1,28 @@
+{
+  "name": "dbmonster",
+  "version": "0.0.0",
+  "description": "Small description for dbmonster goes here",
+  "private": true,
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "ember server",
+    "build": "ember build",
+    "test": "ember test"
+  },
+  "repository": "",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "broccoli-asset-rev": "^2.0.2",
+    "ember-cli": "^1.13.12",
+    "ember-cli-babel": "^5.0.0",
+    "ember-cli-htmlbars": "1.0.1",
+    "ember-data": "^1.13.12"
+  }
+}

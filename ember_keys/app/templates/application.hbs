@@ -1,7 +1,7 @@
 <div>
   <table class="table table-striped latest-data">
     <tbody>
-      {{#each model.databaseArray as |db|}}
+      {{#each model.databaseArray key='name' as |db|}}
         {{dbmon-database db=db}}
       {{/each}}
   </tbody>
