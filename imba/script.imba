@@ -3,15 +3,42 @@ var ENV = rows: 100, timeout: 0
 var start = Date.now
 var loadCount = 0
 
-def getData
+GET_DATA = do
 	var data =
 		start_at: Date.new.getTime / 1000
 		databases: {}
 
 	let i = 1
-	while i++ < ENV:rows
+	while ++i < ENV:rows
 		data:databases["cluster{i}"] = {queries: []}
 		data:databases["cluster{i}slave"] = {queries: []}
+
+	for own name,db of data:databases
+		let r = Math.floor Math.random * 10 + 1
+		let k = 0
+		while k++ < r
+			let q =
+				canvas_action: null
+				canvas_context_id: null
+				canvas_controller: null
+				canvas_hostname: null
+				canvas_job_tag: null
+				canvas_pid: null
+				elapsed: Math.random * 15
+				query: "SELECT blah FROM something"
+				waiting: Math.random < 0.5
+
+			if Math.random < 0.2
+				q:query = "<IDLE> in transaction"
+			if Math.random < 0.1
+				q:query = "vacuum"
+
+			db:queries.push(q)
+
+		db:queries = db:queries.sort do |a,b|
+			b:elapsed - a:elapsed
+
+	return data
 
 tag query
 

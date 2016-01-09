@@ -4,17 +4,50 @@
 	var start = Date.now();
 	var loadCount = 0;
 	
-	function getData(){
+	GET_DATA = function() {
 		var data = {
 			start_at: new Date().getTime() / 1000,
 			databases: {}
 		};
 		
 		var i = 1;
-		var res = [];while (i++ < ENV.rows){
+		while (++i < ENV.rows){
 			data.databases[("cluster" + i)] = {queries: []};
-			res.push((data.databases[("cluster" + i + "slave")] = {queries: []}));
-		};return res;
+			data.databases[("cluster" + i + "slave")] = {queries: []};
+		};
+		
+		for (var o = data.databases, db, j = 0, keys = Object.keys(o), l = keys.length; j < l; j++){
+			db = o[keys[j]];var r = Math.floor(Math.random() * 10 + 1);
+			var k = 0;
+			while (k++ < r){
+				var q = {
+					canvas_action: null,
+					canvas_context_id: null,
+					canvas_controller: null,
+					canvas_hostname: null,
+					canvas_job_tag: null,
+					canvas_pid: null,
+					elapsed: Math.random() * 15,
+					query: "SELECT blah FROM something",
+					waiting: Math.random() < 0.5
+				};
+				
+				if (Math.random() < 0.2) {
+					q.query = "<IDLE> in transaction";
+				};
+				if (Math.random() < 0.1) {
+					q.query = "vacuum";
+				};
+				
+				db.queries.push(q);
+			};
+			
+			db.queries = db.queries.sort(function(a,b) {
+				return b.elapsed - a.elapsed;
+			});
+		};
+		
+		return data;
 	};
 	
 	tag$.defineTag('query', function(tag){
