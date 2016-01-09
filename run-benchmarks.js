@@ -11,11 +11,11 @@ var dirs = {
 	angular1_trackby: 'angular1_trackby',
 	angular2: 'angular2',
 	mithril: 'mithril',
-	mithril: 'mithril_keys',
+	mithril_keys: 'mithril_keys',
 	virtualdom: 'virtualdom',
-	virtualdom: 'virtualdom_keys',
+	virtualdom_keys: 'virtualdom_keys',
 	citojs: 'citojs',
-	citojs: 'citojs_keys'
+	citojs_keys: 'citojs_keys'
 }
 
 var browserPerf = require('browser-perf');
