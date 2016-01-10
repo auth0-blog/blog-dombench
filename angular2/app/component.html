@@ -1,0 +1,28 @@
+<div id="dbmon">
+    <div>
+        <table class="table table-striped latest-data">
+            <tbody>
+                <tr *ngFor="#database of getDatabases()">
+                    <td class="dbname">
+                        {{database.name}}
+                    </td>
+                    <td class="query-count">
+                        <span [ngClass]="database.countClassName">
+                            {{database.lastSample.queries.length}}
+                        </span>
+                    </td>
+                    <td *ngFor="#query of database.topFiveQueries"
+                        [ngClass]="getClassName(query)">
+                        {{formatElapsed(query.elapsed)}}
+                        <div class="popover left">
+                            <div class="popover-content">
+                                {{query.query}}
+                            </div>
+                            <div class="arrow"></div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

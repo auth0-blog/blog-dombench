@@ -113,9 +113,7 @@ var sample = function sample(queries, time) {
 
   var _queries = [];
   topFiveQueries.forEach(function (query, index) {
-    _queries.push(React.createElement(Query, {
-      key: index,
-      query: query.query,
+    _queries.push(React.createElement(Query, { query: query.query,
       elapsed: query.elapsed
     }));
   });
@@ -148,7 +146,7 @@ var Database = React.createClass({
 
     return React.createElement(
       "tr",
-      { key: this.props.dbname },
+      null,
       React.createElement(
         "td",
         { className: "dbname" },
@@ -203,8 +201,7 @@ var DBMon = React.createClass({
   render: function render() {
     var databases = [];
     Object.keys(this.state.databases).forEach((function (dbname) {
-      databases.push(React.createElement(Database, { key: dbname,
-        dbname: dbname,
+      databases.push(React.createElement(Database, { dbname: dbname,
         samples: this.state.databases[dbname].samples }));
     }).bind(this));
 

@@ -1,0 +1,12 @@
+/* Styles go here */
+
+._query {
+  position: relative;
+}
+
+._query:hover .popover {
+  left: -100%;
+  width: 100%;
+  display: block;
+}
+
