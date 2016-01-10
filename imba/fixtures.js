@@ -3,9 +3,6 @@
 // the performance of the different frameworks it would be more natural to precreate
 // 100 datasets or so - and then reuse these.
 
-var cached = [];
-var fetches = 0;
-
 function createData(rows){
 	data = {
     start_at: new Date().getTime() / 1000,
@@ -58,20 +55,8 @@ function createData(rows){
   return data;
 }
 
-function pregenerateData(rows) {
-	for(var i = 0; i < 20; i++) {
-		cached[i] = createData(rows);
-	}
-}
-
 Fixtures = {
   getData: function(rows){
     return createData(rows);
-  },
-	getCachedData: function(rows){
-		if(cached.length == 0) pregenerateData(rows);
-		var index = fetches % cached.length;
-		fetches++;
-		return cached[index];
-	}
+  }
 }
