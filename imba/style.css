@@ -1,10 +1,10 @@
 /* Styles go here */
 
-.Query {
+._query {
   position: relative;
 }
 
-.Query:hover .popover {
+._query:hover .popover {
   left: -100%;
   width: 100%;
   display: block;

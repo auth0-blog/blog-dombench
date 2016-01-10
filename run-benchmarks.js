@@ -15,7 +15,8 @@ var dirs = {
 	virtualdom: 'virtualdom',
 	virtualdom_keys: 'virtualdom_keys',
 	citojs: 'citojs',
-	citojs_keys: 'citojs_keys'
+	citojs_keys: 'citojs_keys',
+	imba: 'imba'
 }
 
 var browserPerf = require('browser-perf');
