@@ -1,0 +1,11 @@
+{
+  "blacklist": ["react"],
+  "plugins": ["incremental-dom"],
+  "extra": {
+    "incremental-dom": {
+        "prefix-remove-this": "IncrementalDOM"
+    }
+  }
+}
+
+
